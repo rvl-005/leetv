@@ -55,6 +55,7 @@ import urllib.parse
 import subprocess
 import json
 import re
+from pathlib import Path
 
 from leeutils import Log, natural_sort
 
@@ -141,7 +142,8 @@ def main(directory, name, append, verbose):
         log.error("No videos found in {}".format(directory))
 
     try:
-        flname = os.path.join(os.getenv('HOME'), '.leetv', 'media', name + '.lst')
+        home = os.getenv('HOME') or os.getenv('USERPROFILE') or str(Path.home())
+        flname = os.path.join(home, '.leetv', 'media', name + '.lst')
         if append:
             filelist = open(flname, 'a')
             log.info("Appending media file list {}".format(flname))
